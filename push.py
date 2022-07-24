@@ -16,6 +16,19 @@ from platform import system  as platsys
 slash="/"
 if platsys()=="Windows":slash="\\"
 
+def DELETE_FOLDER(folder):
+    print("folder "+str(folder)+" eliminado")
+
+def DELETE_FILE(filepath):
+    print("file "+str(filepath)+" eliminado")
+
+def REPLACE_FILE(origin,destination):
+    print("")
+    print("replace file")
+    print(origin)
+    print(destination)
+    print("")
+
 #--------------------
 def concat_strings(*args):
     string=""; first=True
@@ -26,7 +39,7 @@ def concat_strings(*args):
 #--------------------
 def is_extension(extension):
     if extension[0]=="*"  and len(extension)>1:
-        if extension[1]==".": return True
+        if extension[1]=="." and extension!="*.": return True
         else: return False
     else:return False
 #-------------------
@@ -47,6 +60,11 @@ class object_arguments:
         #arguments
         self.__extensions=[]
         self.__nameFiles=[]
+        #files analized
+        self.__pushfiles=[]
+        self.__files=[]
+        self.__folders=[]
+
 
 
     def list(self): return self.arguments
