@@ -17,14 +17,23 @@ slash="/"
 if platsys()=="Windows":slash="\\"
 
 #--------------------
-
 def concat_strings(*args):
     string=""; first=True
     for x in args:
         if  first: first=False;string=str(x)
         else: string+=" "+str(x)
     return string    
-
+#--------------------
+def is_extension(extension):
+    if extension[0]=="*"  and len(extension)>1:
+        if extension[1]==".": return True
+        else: return False
+    else:return False
+#-------------------
+def is_file_name(filename):
+    if (filename=="/" or  filename=="\\")  and len(filename)!=1:  
+        return True
+    else: return False
 #--------------------
 class object_arguments:
 
@@ -51,9 +60,6 @@ class object_arguments:
             xx=self.path+slash+x
             if isdir(xx):self.__dirs.append(xx)
             elif isfile(xx):self.__files.append(xx)
-
-
-
 
     def analyze_content(self):
         self.__scan_path()
