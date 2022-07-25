@@ -37,6 +37,11 @@ def concat_strings(*args):
         else: string+=" "+str(x)
     return string    
 #--------------------
+def is_end(string,end):
+    pass
+    
+
+
 def is_extension(extension):
     if extension[0]=="*"  and len(extension)>1:
         if extension[1]=="." and extension!="*.": return True
@@ -52,6 +57,18 @@ def is_exception(argument):
     list_arg=argument.split()
     if list_arg[0]=="-":return True
     else: return False
+#-------------------
+def get_extension(extension): return extension[1:len(extension)]
+#-------------------
+def get_exception(exception):
+    tupleargs=[]
+    first=True
+    for x in exception.split():
+        if first:first=False
+        else: tupleargs.append(x)
+    return concat_strings(*tuple(tupleargs))
+#-------------------
+
 #--------------------
 class object_arguments:
 
@@ -60,36 +77,59 @@ class object_arguments:
         self.arguments=[]
         #content  analyzed
         #path filenames
-        self.__dirs=[]
-        self.__files=[]
+        self.dirs=[]
+        self.files=[]
         #arguments
+        self.__AllFiles=False # case *
+        #-----------
         self.__extensions=[]
-        self.__nameFiles=[]
-        #files analized
+        self.__files=[]
+        self.__folders=[]
+        #-----------
+        self.__No_extensions=[]
+        self.__No_files=[]
+        self.__No_folders=[]
+        #files analized -----
         self.__pushfiles=[]
         self.__files=[]
         self.__folders=[]
 
     def list(self): return self.arguments
+    def get_is_all_files(self): return self.__AllFiles
 
     def add_extension(self,extension):
         if extension!=" "*len(extension):
             self.arguments.append(extension)
+
+    def add_extension_list(self,list_extensions):
+        for x in list_extensions:
+            self.add_extension()
+        self.analyze_content()
     
     def __scan_path(self):
         for x in listdir(self.path):
             xx=self.path+slash+x
-            if isdir(xx):self.__dirs.append(xx)
-            elif isfile(xx):self.__files.append(xx)
+            if isdir(xx):self.dirs.append(xx)
+            elif isfile(xx):self.files.append(xx)
 
     def __analyze_arguments(self):
         for x in self.arguments:
-            print(x)
+            if x=="*":self.__AllFiles=True
+            elif is_exception(x): # - args
+                y=get_exception(x)
+                xx=self.path+slash+y
+                if is_extension(y):self.__No_extensions.append(xx)
+                elif is_file_name(y):self.__No_files.append(xx)
+                elif y!="":self.__No_folders.append(xx)
+            else: # args
+                xx=self.path+slash+x
+                if is_extension(x):self.__extensions.append(xx)
+                elif is_file_name(x):self.__files.append(xx)
+                elif x!="":self.__folders.append(xx) 
 
     def analyze_content(self):
         self.__scan_path()
         self.__analyze_arguments()
-        pass
 
 #--------------------
 
@@ -155,6 +195,8 @@ class filepush_data:
 def push(path):
     file_data=filepush_data(path)
     local=object_arguments(path)
+    #  algorithm for push
+    #
     
     print("hello  ")
     print(path)
