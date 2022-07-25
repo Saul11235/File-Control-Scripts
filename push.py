@@ -47,6 +47,11 @@ def is_file_name(filename):
     if (filename=="/" or  filename=="\\")  and len(filename)!=1:  
         return True
     else: return False
+#-------------------
+def is_exception(argument):
+    list_arg=argument.split()
+    if list_arg[0]=="-":return True
+    else: return False
 #--------------------
 class object_arguments:
 
@@ -65,8 +70,6 @@ class object_arguments:
         self.__files=[]
         self.__folders=[]
 
-
-
     def list(self): return self.arguments
 
     def add_extension(self,extension):
@@ -79,8 +82,13 @@ class object_arguments:
             if isdir(xx):self.__dirs.append(xx)
             elif isfile(xx):self.__files.append(xx)
 
+    def __analyze_arguments(self):
+        for x in self.arguments:
+            print(x)
+
     def analyze_content(self):
         self.__scan_path()
+        self.__analyze_arguments()
         pass
 
 #--------------------
