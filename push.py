@@ -200,7 +200,7 @@ class filepush_data:
                 
 #--------------------
 
-def push(path):
+def push(path,*subarg):
     file_data=filepush_data(path)
     #************************
     #  algorithm for push
@@ -212,6 +212,7 @@ def push(path):
         local=object_arguments(path)
         local.add_extension_list(list_args)
         # subfiles 
+
 
         # special  path 
         for x in local.get_special_folders():push(x)
