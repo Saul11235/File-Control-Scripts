@@ -28,7 +28,6 @@ def REPLACE_FILE(origin,destination):
     print(origin)
     print(destination)
     print("")
-
 #--------------------
 def concat_strings(*args):
     string=""; first=True
@@ -38,10 +37,11 @@ def concat_strings(*args):
     return string    
 #--------------------
 def is_end(string,end):
-    pass
-    
-
-
+    if len(end)>len(string):return False
+    nend=string[len(string)-len(end):len(string)]
+    if nend==end:return True
+    else: return False
+#--------------------    
 def is_extension(extension):
     if extension[0]=="*"  and len(extension)>1:
         if extension[1]=="." and extension!="*.": return True
@@ -67,8 +67,11 @@ def get_exception(exception):
         if first:first=False
         else: tupleargs.append(x)
     return concat_strings(*tuple(tupleargs))
-#-------------------
-
+#--------------------
+def is_special_path(path):
+    path_file=path+slash+".filepush"
+    if isfile(path_file):return True 
+    else: return False
 #--------------------
 class object_arguments:
 
@@ -103,7 +106,7 @@ class object_arguments:
 
     def add_extension_list(self,list_extensions):
         for x in list_extensions:
-            self.add_extension()
+            self.add_extension(x)
         self.analyze_content()
     
     def __scan_path(self):
@@ -131,6 +134,12 @@ class object_arguments:
         self.__scan_path()
         self.__analyze_arguments()
 
+    def get_special_folders(self):
+        response=[]
+        for x in self.dirs:
+            if is_special_path(x):response.append(x)
+        return response
+
 #--------------------
 
 class filepush_data:
@@ -142,8 +151,7 @@ class filepush_data:
             self.data=file.read().split("\n")
             file.close()
         except:
-            print("error reading .filepush")
-            print("error on path: "+location_path)
+            print(" no .filepush:\n"+location_path)
         a=self.sorting_arguments_filepush()
         self.list_objects=self.generate_objects_arguments(a)
 
@@ -194,13 +202,33 @@ class filepush_data:
 
 def push(path):
     file_data=filepush_data(path)
-    local=object_arguments(path)
+    #************************
     #  algorithm for push
-    #
-    
-    print("hello  ")
-    print(path)
+    #************************
 
+    for arg in file_data.list():
+        list_args=arg.list()
+        # local objetct 
+        local=object_arguments(path)
+        local.add_extension_list(list_args)
+        # subfiles 
+
+        # special  path 
+        for x in local.get_special_folders():push(x)
+
+        # push on  path
+        print("filepush:\t"+path)
+        print("destination:\t"+arg.path)
+        
+
+
+        print("")
+    
+
+    #************************
+    #  algorithm for push
+    #************************
+    
 
 
 #--------------------
