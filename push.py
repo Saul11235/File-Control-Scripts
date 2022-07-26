@@ -6,11 +6,11 @@
 minimun_address_length=6  
 
 #--------------------
-
-from os import getcwd,listdir
-from os.path import isfile,isdir
+from os import getcwd,listdir,mkdir,makedirs
+from os import remove
+from os.path import isfile,isdir,basename
 from platform import system  as platsys
-
+from shutil import copy
 #--------------------
 
 slash="/"
@@ -20,15 +20,64 @@ def DELETE_FOLDER(folder):
     print("folder "+str(folder)+" eliminado")
 
 def DELETE_FILE(filepath):
-    print("file "+str(filepath)+" eliminado")
+    try:
+        remove(filepath)
+        print("  deleted   : "+filepath)
+    except:
+        print("  ERROR del : "+filepath)
 
-def REPLACE_FILE(origin,destination):
-    print("")
-    print("replace file")
-    print(origin)
-    print(destination)
-    print("")
+
+def COPY_FILE(path_origin_file,destination):
+    try:
+        copy(path_origin_file,destination)
+        print("  copy file : "+path_origin_file)
+    except:
+        print("  ERROR copy:"+path_origin_file)
+
 #--------------------
+def intersection(list1,list2):
+    response=[] 
+    for x in list1:
+        try: list2.index(x);response.append(x)
+        except:pass
+    return response
+
+def diference(list1,list2):
+    response=[]
+    for x in list1:
+        try: list2.index(x)
+        except: response.append(x)
+    return response
+
+def list_subdirs(path):
+    subdirs=[]
+    for x in listdir(path):
+        full_path=path+slash+x
+        if isdir(full_path):subdirs.append(full_path)
+    return subdirs
+
+def list_special_subdirs(path):
+    especial_subdirs=[]
+    for x in list_subdirs(path):
+        if is_special_path(x):especial_subdirs.append(x)
+    return especial_subdirs    
+
+def list_no_special_subdirs(path):
+    normal_subdirs=[]
+    for x in list_subdirs(path):
+        if  not(is_special_path(x)):normal_subdirs.append(x)
+    return normal_subdirs
+
+def list_files(path):
+    subfiles=[]
+    for x in listdir(path):
+        full_path=path+slash+x
+        if isfile(full_path) and x!=".filepush" and x!=".filepull":
+            subfiles.append(full_path)
+    return subfiles
+
+
+
 def concat_strings(*args):
     string=""; first=True
     for x in args:
@@ -99,6 +148,7 @@ class object_arguments:
 
     def list(self): return self.arguments
     def get_is_all_files(self): return self.__AllFiles
+    def get_path(self): return self.path
 
     def add_extension(self,extension):
         if extension!=" "*len(extension):
@@ -139,6 +189,24 @@ class object_arguments:
         for x in self.dirs:
             if is_special_path(x):response.append(x)
         return response
+
+    def get_no_special_folders(self):
+        response=[]
+        print("----")
+        print(self.dirs)
+        print("-----")
+        for x in self.dirs:
+            if not(is_special_path(x)):response.append(x)
+        return response
+
+    def get_atributes_no_folder(self):
+        response=[]
+        for x in self.arguments:
+            if not(is_file_name(x)):response.append(x)
+        return response
+
+
+
 
 #--------------------
 
@@ -190,41 +258,68 @@ class filepush_data:
     def generate_objects_arguments(self,list_arguments):
         list_objects=[]
         for x in list_arguments:
-            p=x[0] # destination path
-            if len(p)>minimun_address_length and isdir(p) and len(x[1]):
-                obj=object_arguments(x[0])
-                for extension in x[1]:obj.add_extension(extension)
-                obj.analyze_content()
-                list_objects.append(obj)
+            if len(x[0])>minimun_address_length and len(x[1]):
+                path_destiny=x[0]
+                if not(isdir(path_destiny)):
+                    makedirs(path_destiny)
+                if isdir(path_destiny):
+                    obj=object_arguments(path_destiny)
+                    for extension in x[1]:
+                        obj.add_extension(extension)
+                    obj.analyze_content()
+                    list_objects.append(obj)
         return list_objects
                 
 #--------------------
 
-def push(path,*subarg):
-    file_data=filepush_data(path)
-    #************************
-    #  algorithm for push
-    #************************
+def push(path):
+    # push in subdirs whith .filepush----
+    for x in list_special_subdirs(path):push(x)
+    # push  on current path
+    cicle_pushfile(path)
 
-    for arg in file_data.list():
-        list_args=arg.list()
-        # local objetct 
-        local=object_arguments(path)
-        local.add_extension_list(list_args)
-        # subfiles 
-
-
-        # special  path 
-        for x in local.get_special_folders():push(x)
-
-        # push on  path
-        print("filepush:\t"+path)
-        print("destination:\t"+arg.path)
-        
-
-
+   
+def cicle_pushfile(path_origin):
+    file_push=filepush_data(path_origin)
+    for obj_destination in file_push.list():
+        # vars genral
+        path_destiny=obj_destination.get_path()
+        if path_origin==path_destiny:
+            print("Error autoref: "+path_destiny)
+            exit()
+        else:
+            print("Origin  : "+path_origin)
+            print("Destiny : "+path_destiny)
+        move_all_files=obj_destination.get_is_all_files()
+        #  origin vars
+        dirs_origin  =list_no_special_subdirs(path_origin)
+        files_origin =list_files(path_origin)
+        dirs_destiny =list_subdirs(path_destiny)
+        files_destiny=list_files(path_destiny)
+        #----------------------------------
+        FILES_TO_COPY=[]
+        #----------------------------------
+        if move_all_files:
+            # case * copy all files
+            FILES_TO_COPY=files_origin
+        else:
+            # case NO * no copy all files
+            print("no alll  files")
+            pass
+        #copying files
+        FILES_COPYED=[]
+        for x in FILES_TO_COPY:
+            COPY_FILE(x,path_destiny)
+            new_file=path_destiny+slash+basename(x)
+            FILES_COPYED.append(new_file)
+        #cleaner path data
+        FILES_TO_DESTROY=diference(files_destiny,FILES_COPYED)
+        for x  in FILES_TO_DESTROY:DELETE_FILE(x)
         print("")
-    
+
+       
+
+  
 
     #************************
     #  algorithm for push
