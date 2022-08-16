@@ -10,17 +10,17 @@ except:
     from __class_filter import filter_
 
 
-special_name_file=".filepush"
+special_name_file=".filepull"
 
 #==================================================
 #
-#      XXXXXX     X    X     XXXXXX     X    X
-#      X    X     X    X     X          X    X
-#      X    X     X    X     X          X    X
-#      XXXXXX     X    X     XXXXXX     XXXXXX
-#      X          X    X          X     X    X
-#      X          X    X          X     X    X
-#      X          XXXXXX     XXXXXX     X    X
+#      XXXXXX     X    X     X          X
+#      X    X     X    X     X          X
+#      X    X     X    X     X          X
+#      XXXXXX     X    X     X          X
+#      X          X    X     X          X
+#      X          X    X     X          X
+#      X          XXXXXX     XXXXXX     XXXXXX
 #
 #==================================================
 
@@ -32,14 +32,13 @@ def cicle(origin,destiny):
 
 #===================================================
 
-def push(path):
+def pull(path):
     #-----------------
     origin=path_obj(path,special_name_file)
     for subdir in origin.special_subdirs():
-        push(subdir)
-    filepush=special_file(path,special_name_file)
+        pull(subdir)
+    filepull=special_file(path,special_name_file)
     #-----------------
-    for destiny in filepush.list():
+    for destiny in filepull.list():
         cicle(origin,destiny)
 
-    #filepush=special_file(path,".filepush")

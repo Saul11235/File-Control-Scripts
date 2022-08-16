@@ -1,5 +1,10 @@
+#
+# class filter
+#
 
-class filter:
+import __actions_list as al
 
-    def __init__(self):
+class filter_:
+
+    def __init__(self,origin,destiny):
         pass

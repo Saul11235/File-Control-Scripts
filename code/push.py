@@ -8,7 +8,7 @@ except:
     from .__function_push import push
 
 
-text_default="""# filepush -  by Edwin Saul - @Saul1135
+text_default="""# filepush -  by Edwin Saul - @Saul11235
 # use # for comment
 # use ##  for set destination path
 # write bellow extensions, file names or folder names to push
