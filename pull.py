@@ -1,2 +1,0 @@
-# sincronize files 
-print("sincronizado")
