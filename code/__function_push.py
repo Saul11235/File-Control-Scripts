@@ -25,7 +25,7 @@ special_name_file=".filepush"
 #==================================================
 
 def cicle(origin,destiny):
-    f=filter_(origin,destiny)
+    f=filter_(origin,destiny,special_name_file)
     print("")
     print(origin)
     print(destiny)
