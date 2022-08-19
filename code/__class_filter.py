@@ -2,7 +2,7 @@
 # class filter
 #
 try:
-    from .__class_path_obj import path_obj
+    from __class_path_obj import path_obj
 except:
     from .__class_path_obj import path_obj
 
@@ -23,14 +23,19 @@ class filter_:
         self.path_destiny=path_obj(destiny.get_path(),specialn)
         #----------------------
         self.files_origin=[]
+        self.files_destiny=[]
+        self.folders_origin=[]
+        self.folders_destiny=[]
         #----------------------
         self.__sort_information()
 
 
     def __sort_information(self):
-        self.__sorting_files_in_origin()
-
-    def __sorting_files_in_origin(self):
+        self.files_origin=self.path_origin.all_files()
+        self.files_destiny=self.path_destiny.all_files()
+        self.folders_origin=self.path_origin.no_special_dirs()
+        self.folders_destiny=self.path_destiny.no_special_dirs()
+        #------------------
         
 
         pass

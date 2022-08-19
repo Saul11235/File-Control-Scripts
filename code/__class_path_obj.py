@@ -15,8 +15,8 @@ class path_obj:
     def special_subdirs(self):
         return ap.list_special_subdirs(self.path,self.special)
 
-    def no_special_subdirs(self):
-        l=ap.list_no_special_subdirs(self.path,self.especial)
+    def no_special_dirs(self):
+        l=ap.list_no_special_subdirs(self.path,self.special)
         return l
 
     def all_folders(self):

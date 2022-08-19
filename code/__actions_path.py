@@ -6,9 +6,9 @@ from os.path import isdir, isfile
 from os import listdir
 
 try:
-    from .__slash import slash
-except:
     from __slash import slash
+except:
+    from .__slash import slash
 
 
 def list_subdirs(path):

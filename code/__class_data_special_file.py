@@ -2,9 +2,9 @@
 # class data_special_file
 #
 try:
-    from .__slash import slash
-except:
     from __slash import slash
+except:
+    from .__slash import slash
 
 import __actions_str as ast
 import __actions_path as ap
