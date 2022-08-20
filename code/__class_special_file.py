@@ -9,6 +9,8 @@ except:
 
 from platform import system
 from os.path import isdir
+from os import makedirs
+
 
 import __actions_str as ast
 
