@@ -1,7 +1,10 @@
 #
 # string actions
 #
-
+try:
+    from __slash import slash
+except:
+    from .__slash import slash
 
 def concat_strings(*args):
     nargs=[]
@@ -70,7 +73,6 @@ def get_extension(extension):
         else: txt+=x
     return extension[1:len(extension)]
 
-
 def get_exception(exception):
     text=str(exception)
     text=text.replace("\t"," ")
@@ -89,7 +91,17 @@ def get_exception(exception):
         return concat_strings(*tuple(list_response))
     else: return ""
 
-
+def get_subname(fullname):
+    reverse_text=str(fullname)[::-1]
+    acumulator=""
+    acumulate=True
+    for x in reverse_text:
+        if acumulate:
+            if x==slash:
+                acumulate=False
+            else:
+                acumulator+=x
+    return acumulator[::-1]
 
 if __name__=="__main__":
     # test
@@ -115,10 +127,15 @@ if __name__=="__main__":
     #print(get_extension("*.xls"))
     #print(get_extension("*.pdf"))
 
-    print(get_exception("-lolo"))
-    print(get_exception("-como es esto "))
-    print(get_exception("- como es esto "))
-    print(get_exception("   - como es esto "))
+    #print(get_exception("-lolo"))
+    #print(get_exception("-como es esto "))
+    #print(get_exception("- como es esto "))
+    #print(get_exception("   - como es esto "))
+
+    print(get_subname("noshow2/noshow1\\name"))
+    print(get_subname("show_name"))
+    print(get_subname("hola/show_name"))
+
 
 
 
