@@ -38,8 +38,32 @@ class filter_:
         #------------------
         
 
-    def PUSH_files(self):
-        pass
+    def PUSH_files_to_copy(self):
+        print("---")
+        print(self.files_origin)
+
+        print("---")
+        files=[]
+        for x in self.files_origin:
+            if self.arguments_destiny.is_file(x):
+                files.append(x)
+        return files
+
+    def PUSH_files_to_delete(self):
+        files=[]
+        for x in self.files_origin:
+            if self.arguments_destiny.is_file(x):
+                files.append(x)
+        return files
+
+    def PUSH_subfolders_to_push(self):
+        folders=[]
+        for x in self.folders_origin:
+            if self.arguments_destiny.is_folder(x):
+                folders_destiny.append(x)
+        return folders
+
+
 
     
 

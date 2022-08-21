@@ -35,6 +35,17 @@ class data_special_file:
 
     def list(self): return self.arguments
 
+    def is_file(self,namefile):
+        print("namefile "+str([namefile]))
+
+        pass
+
+
+    def is_folder(self,namefolder):
+        print("namefolder "+str([namefolder]))
+        pass
+
+
     def get_arg_positve(self):
         return self.__extensions+self.__files+self.__folders
 
@@ -94,9 +105,7 @@ class data_special_file:
 
     def get_no_special_folders(self):
         response=[]
-        print("----")
         print(self.dirs)
-        print("-----")
         for x in self.dirs:
             if not(is_special_path(x)):response.append(x)
         return response

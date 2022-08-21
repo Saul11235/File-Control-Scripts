@@ -26,9 +26,18 @@ special_name_file=".filepush"
 
 def cicle(origin,destiny):
     f=filter_(origin,destiny,special_name_file)
-    print("")
-    print(origin)
-    print(destiny)
+    #----------------------------------
+    files_to_copy=f.PUSH_files_to_copy()
+    files_to_delete=f.PUSH_files_to_delete()
+    folders_to_push=f.PUSH_subfolders_to_push()
+
+
+def cicle_subdir(origin,destiny):
+    pass
+    
+
+
+
 
 #===================================================
 

@@ -26,6 +26,8 @@ special_name_file=".filepull"
 
 def cicle(origin,destiny):
     f=filter_(origin,destiny,special_name_file)
+    for file_ in f.PUSH_files_to_copy():
+        print(file_)
     print("")
     print(origin)
     print(destiny)

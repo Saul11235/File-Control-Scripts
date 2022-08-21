@@ -89,6 +89,8 @@ def get_exception(exception):
         return concat_strings(*tuple(list_response))
     else: return ""
 
+
+
 if __name__=="__main__":
     # test
     test="test"

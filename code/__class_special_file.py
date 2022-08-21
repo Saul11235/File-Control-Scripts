@@ -77,7 +77,11 @@ class special_file:
             if len(x[0])>minimun_address_length and len(x[1]):
                 path_destiny=x[0]
                 if not(isdir(path_destiny)):
-                    makedirs(path_destiny)
+                    try:
+                        makedirs(path_destiny)
+                    except:
+                        print("not valid path "+str(path_destiny))
+                        exit()
                 if isdir(path_destiny):
                     # make a new object -----------------
                     obj=data_special_file(path_destiny,self.special_name)
