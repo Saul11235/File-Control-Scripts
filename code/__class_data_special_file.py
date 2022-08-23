@@ -36,14 +36,55 @@ class data_special_file:
     def list(self): return self.arguments
 
     def is_file(self,namefile):
-        print("namefile "+str([namefile]))
-
-        pass
-
+        get_name=ast.get_subname
+        name=get_name(namefile)
+        #-------------------
+        extension=False
+        for x in self.__extensions:
+            if ast.is_name_extension(name,x):
+                extension=True
+        #-------------------
+        noextension=False
+        for x in self.__No_extensions:
+            if ast.is_name_no_extension(name,x):
+                noextension=True
+        #--------------------        
+        file_=False
+        for x in self.__files:
+            if name==get_name(x):file_=True
+        #--------------------        
+        nofile=False
+        for x in self.__No_files:
+            print(x)
+            if name==get_name(x):nofile=True
+        #--------------------        
+        if self.__AllFiles:
+            if noextension or nofile:
+                return   False
+            else: return True
+        else:
+            if extension or file_:
+                return   True
+            else: return False
 
     def is_folder(self,namefolder):
-        print("namefolder "+str([namefolder]))
-        pass
+        get_name=ast.get_subname
+        name=get_name(namefolder)
+        #--------------------        
+        folder=False
+        for x in self.__folders:
+            if name==get_name(x): folder=True
+        #--------------------        
+        nofolder=False
+        for x in self.__No_folders:
+            if name==get_name(x): nofolder=True
+        #--------------------        
+        if self.__AllFiles:
+            if folder: return True
+            else:      return False
+        else:
+            if nofolder: return True
+            else:        return False
 
 
     def get_arg_positve(self):

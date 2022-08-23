@@ -103,6 +103,16 @@ def get_subname(fullname):
                 acumulator+=x
     return acumulator[::-1]
 
+def is_name_extension(name,extension):
+    extension=get_extension(extension)
+    return is_end(name,extension)
+
+def is_name_no_extension(name,extension):
+    extension=get_exception(get_extension(extension))
+    return is_end(name,extension)
+
+
+
 if __name__=="__main__":
     # test
     test="test"

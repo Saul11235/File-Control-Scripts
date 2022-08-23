@@ -28,8 +28,20 @@ def cicle(origin,destiny):
     f=filter_(origin,destiny,special_name_file)
     #----------------------------------
     files_to_copy=f.PUSH_files_to_copy()
+    print("")
+    print("COPY")
+    for fl in files_to_copy:
+        print(fl)
     files_to_delete=f.PUSH_files_to_delete()
+    print("")
+    print("DELETE")
+    for fl in files_to_delete:
+        print(fl)
     folders_to_push=f.PUSH_subfolders_to_push()
+    print("")
+    print("push")
+    for fl in folders_to_push:
+        print(fl)
 
 
 def cicle_subdir(origin,destiny):
