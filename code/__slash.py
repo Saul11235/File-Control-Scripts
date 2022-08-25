@@ -6,6 +6,6 @@ from platform import system
 
 slash="/"
 
-if system()=="Windows":
+if system()=="windows":
     slash="\\"
 

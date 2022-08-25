@@ -51,6 +51,8 @@ class data_special_file:
         #--------------------        
         file_=False
         for x in self.__files:
+            print(name)
+            print(get_name(x))
             if name==get_name(x):file_=True
         #--------------------        
         nofile=False
