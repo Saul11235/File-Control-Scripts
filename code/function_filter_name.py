@@ -9,40 +9,11 @@
 def __replace_only_one(full_text,part):
     # if to_replace=""
     if __is_on_string(full_text,part):
-        print("itsnt")
         text=full_text[:]
         return text
     else:
+        replaced="dd"
         # comparing
-        print("its on")
-        original=full_text[:]
-        new=full_text[:].replace(part,"*"*len(part))
-        replaced=""
-        # cicle of comparating
-        first_diferent=False
-        end_first_diferent=False
-        for x in range(len(original)):
-            let_org=original[x]
-            let_new=new[x]
-            its_equal=let_org==let_new
-            c="" #character to change
-            #--------------------
-            if end_first_diferent: c=let_org
-            else: #no end_first_diferent
-                if first_diferent:
-                    if its_equal: c=let_new
-                    else: c=let_new;end_first_diferent=True
-                else: #not first_diferent
-                    if its_equal: c="*"
-                    else: c=let_new,first_diferent=True 
-            #---------------------
-            replaced=replaced+c
-            pass
-        print("......")
-        print(original)
-        print(new)
-        print(replaced)
-        print("......")
         return replaced
 
 
@@ -69,8 +40,13 @@ def filter_name(name,filterr):
         list_filter=filterr.split("*")
         # print(list_filter)
         new_text=name[:]
+        print("text strings")
+        print(new_text)
         for x in list_filter:
-            new_text=__replace_only_one(new_text,x)
+            if __is_on_string(new_text,x):
+                new_text=__replace_only_one(new_text,x)[:]
+            else: return False
+        print(new_text)
         # compare newtext
         if new_text==len(new_text)*"*": return True
         else: return False
@@ -82,6 +58,7 @@ if __name__=="__main__":
     print("test filter name\n")
     names=["hola","file.txt","holo.pdf","raaa.pdfkk"]
     filters=["*.pdf","hola"]
+#    names=[]
     #-------
     for name in names:
         for fil in  filters:
@@ -89,3 +66,9 @@ if __name__=="__main__":
                     " \tfilter: "+str(fil)+
                     " \tstatus: "+str(
                         filter_name(name,fil)))
+    #.......................
+
+
+
+
+
