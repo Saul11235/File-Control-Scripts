@@ -2,6 +2,7 @@
 from os.path import isfile
 from os import getcwd
 
+
 try: 
     from class_directory_explorer import directory_explorer
 except:
@@ -10,6 +11,7 @@ except:
 
 def push(path):
     print("pathh push  "+str(path))
+
 
 
 text_default="""
@@ -21,6 +23,7 @@ text_default="""
 """
 
 if __name__=="__main__":
+
     if isfile(".filepush"):
         push((getcwd()))
     else: 
