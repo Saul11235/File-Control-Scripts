@@ -36,6 +36,7 @@ def clear_spaces(text):
 
 def get_path_atributes(line_text):
     text=line_text.replace("##","")
+    text=clear_spaces(text)
     print(text)
 
 #----------------------------
@@ -51,7 +52,7 @@ def clear_list(list_to_clear):
     for x in list_to_clear:
         line=uncoment_line(x)
         clean_line=clear_spaces(line)
-        if clean_line!="" and clean_line!="-":
+        if clean_line!="" and clean_line!="-" and clean_line!="##":
             list_response.append(clean_line)
     return(list_response)
 
@@ -60,11 +61,18 @@ def is_negative_input(string):
     if string[0]=="-": return True
     else: return False
 #----------------------------
+def smart_split_for_path(string):
+    text=string.replace("## ","")
+    print(text)
+    path="path"
+    commands=["commands"]
+    #-----------------
+    return [path[:],commands[:]]
+#----------------------------
 
 def compute_group(list_args):
-    print("#################################")
     first=True
-    path="pp"
+    path=""
     commands=[]
     positive=[]
     negative=[]
@@ -72,15 +80,14 @@ def compute_group(list_args):
         if first:
             first=False
             #clear path and commands
-            
+            atributes_path=smart_split_for_path(x)
+            path=atributes_path[0]
+            commands=atributes_path[1]
         else:
             neg=clear_spaces(x[1:len(x)])
             if is_negative_input(x): negative.append(neg)
             else: positive.append(x)
-    print(list_args)
-    print(positive)
-    print(negative)
-
+    return([path,commands,positive,negative][:])
 
 #----------------------------
 
@@ -106,8 +113,10 @@ def compute_text(text_to_order):
                 content.append(x)
     if len(content):all_content.append(content)
     #---------
+    computed_paths=[]
     for x in all_content:
-        compute_group(x)
+        computed_paths.append(compute_group(x))
+    return computed_paths    
 
 
 
@@ -138,6 +147,7 @@ class special_file:
         self.file_False =[]
         #----------------
         l=compute_text(self.text)
+        print(l)
         #----------------
 
 
