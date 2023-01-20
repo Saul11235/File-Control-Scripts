@@ -1,7 +1,7 @@
 # class explorer .filepush filepull file
+# -------------------------------------
 
-
-
+# -------------------------------------
 
 def uncoment_line(text):
     if not(text.find("##"))==-1: return text.replace("##"," ## ")[:]
@@ -41,7 +41,7 @@ def get_path_atributes(line_text):
 
 #----------------------------
 
-def is_string_path(line_text):
+def is_string_path(line_text): # for decode command
     if line_text.find("##")!=-1: return True
     else: return False
 
@@ -62,12 +62,41 @@ def is_negative_input(string):
     else: return False
 #----------------------------
 def smart_split_for_path(string):
-    text=string.replace("## ","")
-    print(text)
-    path="path"
-    commands=["commands"]
-    #-----------------
-    return [path[:],commands[:]]
+    # return  [path commands]
+    text=string.replace("##","")
+    text=clear_spaces(text)
+    if text=="": return ["",[]]
+    #-----
+    if text[0]=="'" or text[0]=='"':
+        separator=text[0]
+        path=""
+        str_commands=""
+        list_commands=[]
+        first=False
+        second=False
+        for x in text:
+            if x==separator:
+                if first: second=True
+                else: first=True
+            else:
+                if second: str_commands=str_commands+x
+                else: path=path+x
+        path=clear_spaces(path)    
+        str_commands=clear_spaces(str_commands)
+        list_commands=str_commands.split(" ")
+        return [path,list_commands][:]
+    else:
+        list_vars=text.split(" ")
+        first=True
+        path=""
+        commands=[]
+        for x in list_vars:
+            if first: first=False; path=x
+            else: commands.append(x)
+         
+        return [path,commands][:]
+    #-----
+
 #----------------------------
 
 def compute_group(list_args):
@@ -129,33 +158,16 @@ class special_file:
         self.text=""
         #---------
         self.IndexPath  =[] #path  beggins on ##
-        self.path_True  =[]
-        self.path_False =[]
-        self.file_True  =[]
-        self.file_False =[]
-
 
     def add_text(self,text):
         self.text=str(text)
         self.__configure_atributes()
 
     def __configure_atributes(self):
-        self.IndexPath  =[]
-        self.path_True  =[]
-        self.path_False =[]
-        self.file_True  =[]
-        self.file_False =[]
         #----------------
         l=compute_text(self.text)
         print(l)
         #----------------
-
-
-
-
-
-
-
 
 
 
