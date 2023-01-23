@@ -10,7 +10,7 @@ except:
 
 
 def push(path):
-    print("pathh push  "+str(path))
+    print("path push  "+str(path))
 
 
 

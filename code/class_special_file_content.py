@@ -34,13 +34,6 @@ def clear_spaces(text):
 
 #----------------------------
 
-def get_path_atributes(line_text):
-    text=line_text.replace("##","")
-    text=clear_spaces(text)
-    print(text)
-
-#----------------------------
-
 def is_string_path(line_text): # for decode command
     if line_text.find("##")!=-1: return True
     else: return False
@@ -152,10 +145,11 @@ def compute_text(text_to_order):
 
 #----------------------------
 
-class special_file:
+class special_file_content:
 
     def __init__(self):
         self.text=""
+        self.list=[]
         #---------
         self.IndexPath  =[] #path  beggins on ##
 
@@ -165,9 +159,10 @@ class special_file:
 
     def __configure_atributes(self):
         #----------------
-        l=compute_text(self.text)
-        print(l)
+        self.list=compute_text(self.text)
         #----------------
+
+    def return_lists(self): return self.list
 
 
 
@@ -176,7 +171,7 @@ class special_file:
 
 if __name__=="__main__":
     print("test")
-    a=special_file()
+    a=special_file_content()
     nn="""
 # askldfklasd    
 # alajskldfjsad
@@ -197,6 +192,10 @@ if __name__=="__main__":
     print(nn)
     print("------------")
     a.add_text(nn)
+    for x in a.return_lists():
+        print("""["path",[commands],[positive args][negative_args]]""")
+        print(x)
+        print("-------")
 
 
 
