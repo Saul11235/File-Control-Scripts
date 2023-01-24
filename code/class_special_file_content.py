@@ -174,7 +174,7 @@ if __name__=="__main__":
     a=special_file_content()
     nn="""
 # askldfklasd    
-# alajskldfjsad
+# alaj ## skldfjsad
 ## C:/img/04-Puertas
  *.pdf
  *.xls
