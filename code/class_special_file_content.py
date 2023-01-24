@@ -1,16 +1,46 @@
 # class explorer .filepush filepull file
 # -------------------------------------
+from platform import system
+#---------------------------------
+
+slash="/"
+if system()=="Windows":slash="\\"
+
+#--------------------------------
+
+def uniform_slash_path(name,slash):
+    help_string=name.replace("/",str(slash))
+    replaced=help_string.replace("\\",slash)
+    return replaced[:]
 
 # -------------------------------------
 
 def uncoment_line(text):
-    if not(text.find("##"))==-1: return text.replace("##"," ## ")[:]
-    else: 
-        response="";comment=False
+    one_hashtag=False;two_hashtag=False
+    if not(text.find("#")) ==-1:one_hashtag=True
+    if not(text.find("##"))==-1:two_hashtag=True
+    #----------------- 
+    response=""
+    #----------------- 
+    if two_hashtag:
+        string=text[:]
+        ubi=string.find("##") #ubication for ## string
+        hashtag_Alone=False
+        for x in range(len(string)):
+            char=string[x]
+            if char=="#" and not(x==ubi) and not(x==ubi+1):
+                hashtag_Alone=True
+            if not(hashtag_Alone): response=response+char
+        response=response.replace("##","## ")[:]
+    elif one_hashtag:
+        response=""
+        hashtag=False
         for x in text:
-            if x=="#":comment=True
-            if not(comment):response=response+x
-        return response[:]
+            if x=="#": hashtag=True
+            if not(hashtag):response=response+x
+    else:
+        response=text[:]
+    return uniform_slash_path(response,slash)
 
 #----------------------------
 
