@@ -3,14 +3,12 @@ from os.path import isfile
 from os import getcwd
 
 
-try: 
-    from class_directory_explorer import directory_explorer
-except:
-    from .class_directory_explorer import directory_explorer
-
-
-def push(path):
+def push(path): #reads and evaluate
     print("path push  "+str(path))
+    pass
+
+def cicle_push():
+    pass
 
 
 
