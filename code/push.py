@@ -39,7 +39,7 @@ def cicle_push(path1,path2,arguments):
     global cicles
     cicles=cicles+1  #counter var
     line_break()
-    print(" PUSH")
+    print(" PUSH       cicle: "+str(cicles))
     print("  from:     "+str(path1))
     print("  to:       "+str(path2))
     print("  commands: "+str(arguments[0]))
