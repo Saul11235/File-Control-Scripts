@@ -1,8 +1,8 @@
 # File-Push
 sync files and subfiles from one folder to another, updating and removing 
 unrecognized values ​​from the destination folder, you can see  the
-[![Oficial project page](https://img.shields.io/badge/-Oficial_project_page_here -blue)](https://saul11235.github.io/File-Control-Scripts/)
 
+[![Oficial project page](https://img.shields.io/badge/-Oficial_project_page_here-blue)](https://saul11235.github.io/File-Control-Scripts/)
 
 # How to configure?
 
